@@ -18,7 +18,7 @@ SELECT * FROM products;
 INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES 
     ("Telefunken M60 SDC Omni Pair", "Pro-Audio", 1000, 4),
-    ("Moog Sub37", "Synthesizers", 9, 1200),
+    ("Moog Sub37", "Synthesizers", 1200, 9),
     ("Fender 1968 Mint Green Stratocaster Double-Coil Bridge Pickup ", "Guitars", 2850, 1),
     ("Frank Zappa & The Mothers - Live at the Filmore 1971", "Vinyl", 14, 6),
     ("Frank Zappa & The Mothers of Invention - We're Only In It For The Money", "Vinyl", 18, 3),
