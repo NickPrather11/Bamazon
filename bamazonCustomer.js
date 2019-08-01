@@ -40,14 +40,17 @@ function start() {
         }
       ])
       .then(function(answer) {
-        var newQuantity;
+        var newQuantity, price;
 
         for (i = 0; i < results.length; i++) {
+          var num = parseInt(answer.quantity);
+          var stock = parseInt(results[i].stock_quantity);
           if (results[i].item_id === parseInt(answer.id)) {
-            if (parseInt(results[i].stock_quantity) > parseInt(answer.quantity)) {
-              newQuantity = parseInt(results[i].stock_quantity) - parseInt(answer.quantity);
+            if (stock > num) {
+              price = results[i].price * num;
+              newQuantity = stock - num;
               console.log("\r\nChecking Stock... \r\n");
-              purchase(answer.id, newQuantity);
+              purchase(answer.id, newQuantity, price);
               break;
             } else {
               console.log("\r\nWe don't have that much in stock!\r\n");
@@ -61,10 +64,10 @@ function start() {
 }
 
 // function update the table
-function purchase(id, newQuantity) {
+function purchase(id, newQuantity, price) {
   connection.query("UPDATE products SET ? WHERE ?", [{ stock_quantity: newQuantity }, { item_id: id }], function(err) {
     if (err) throw err;
-    console.log("\r\nYour purhase was succesful!\r\n");
+    console.log("\r\nYour total is $" + price + "\r\n");
     // check to see if they want to continue
     continueQ();
   });
