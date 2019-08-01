@@ -72,7 +72,56 @@ function viewLowInv() {
   });
 }
 
-function addInv() {}
+function addInv() {
+  connection.query("SELECT * FROM products", function(err, results) {
+    if (err) console.log(err);
+
+    for (i = 0; i < results.length; i++) {
+      console.log("\r\nItem ID #: " + results[i].item_id);
+      console.log("Item: " + results[i].product_name);
+      console.log("Department: " + results[i].department_name);
+      console.log("Price: $" + results[i].price);
+      console.log("In Stock: " + results[i].stock_quantity + "\r\n");
+    }
+    inquirer
+      .prompt([
+        {
+          name: "stockItem",
+          message: "Enter the Item ID # for the item you would like to stock: "
+        },
+        {
+          name: "stockAdd",
+          message: "How many units would you like to add to stock? "
+        }
+      ])
+      .then(function(answer) {
+        console.log("\r\nUpdating stock for Item ID # " + answer.stockItem + "...\r\n");
+        for (i = 0; i < results.length; i++) {
+          if (results[i].item_id === parseInt(answer.stockItem)) {
+            var oldStock = results[i].stock_quantity,
+              addStock = parseInt(answer.stockAdd),
+              newStock = oldStock + addStock;
+            connection.query(
+              "UPDATE products SET ? WHERE ?",
+              [
+                {
+                  stock_quantity: newStock
+                },
+                {
+                  item_id: answer.stockItem
+                }
+              ],
+              function(err) {
+                if (err) console.log(err);
+                console.log("\r\nStock added succesfully!\r\n");
+                continueQ();
+              }
+            );
+          }
+        }
+      });
+  });
+}
 
 function addProduct() {
   inquirer
