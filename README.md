@@ -11,4 +11,5 @@ TO RUN THIS APP
 3. Once you've installed the dependencies, enter 'node bamazonCustomer.js' to run app as a customer, or 'node bamazonManager.js' to run as a manager.
 
 Demo for bamazonCustomer.js can be found here: https://imgur.com/a/Aux6QG0
+
 Demo for bamazonManager.js can be found here: https://imgur.com/a/di4Mtsa
